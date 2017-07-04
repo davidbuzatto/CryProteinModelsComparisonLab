@@ -4,6 +4,7 @@ The objective of this site is to show the results of a Ph. D. project developed 
 We want to thank IFSP - Instituto Federal de Educação, Ciência e Tecnologia de São Paulo and UNAERP for partial financial support.
 
 [David Buzatto academic curriculum.](http://lattes.cnpq.br/7916716785143122)
+
 [Prof. Sônia Marli Zingaretti academic curriculum.](http://lattes.cnpq.br/3195515678174130)
 
 The models presented here were obtained in [RCSB Protein Data Bank](http://www.rcsb.org/) and were processed by the [Dali pairwise comparison service](http://ekhidna.biocenter.helsinki.fi/dali_lite/start).
