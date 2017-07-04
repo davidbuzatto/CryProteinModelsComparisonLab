@@ -1,0 +1,102 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 3, 2016, 5:04:27 PM
+    Author     : David
+*/
+
+.modal {
+    z-index: 2000000;
+}
+
+.modal-backdrop {
+    z-index: 1999999;
+}
+
+.ui-dialog {
+    z-index: 1000000;
+}
+
+/*.no-close .ui-dialog-titlebar-close {
+    display: none;
+}*/
+
+#divSliceData {
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.structH {
+    color: #7030A0;
+    background-color: #E2D6EC;
+    cursor: pointer;
+}
+
+.structE {
+    color: #FFC000;
+    background-color: #FFF2CC;
+    cursor: pointer;
+}
+
+.structL {
+    color: #007523;
+    background-color: #CCE3D3;
+    cursor: pointer;
+}
+
+.divD {
+    border-radius: 10px;
+}
+
+.divDI {
+    background-color: #ACCCEA;
+    border: solid thin #849CB2;
+}
+
+.divDI-II {
+    background: #acccea; /* Old browsers */
+    background: -moz-linear-gradient(left, #acccea 0%, #afeaaa 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #acccea 0%,#afeaaa 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #acccea 0%,#afeaaa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#acccea', endColorstr='#afeaaa',GradientType=1 ); /* IE6-9 */
+    
+    border: solid thin #999999;
+    border-left: solid thin #849CB2;
+    border-right: solid thin #8CBA87;
+    
+}
+
+.divDII {
+    background-color: #AFEAAA;
+    border: solid thin #8CBA87;
+}
+
+.divDII-III {
+    background: #afeaaa; /* Old browsers */
+    background: -moz-linear-gradient(left, #afeaaa 0%, #ffcd93 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #afeaaa 0%,#ffcd93 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #afeaaa 0%,#ffcd93 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#afeaaa', endColorstr='#ffcd93',GradientType=1 ); /* IE6-9 */
+    
+    border: solid thin #999999;
+    border-left: solid thin #8CBA87;
+    border-right: solid thin #CEA386;
+}
+
+.divDIII {
+    background-color: #FFCD93;
+    border: solid thin #CEA386;
+}
+
+.heD {
+    font-size: 18px;
+}
+
+.equal, .equal > div[class*='col-'] {  
+    display: -webkit-flex;
+    display: flex;
+    flex:1 1 auto;
+}
