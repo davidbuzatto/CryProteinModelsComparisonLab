@@ -507,6 +507,7 @@ Comando.buildComandoInicial = function() {
             "set zoomlarge false;" +
             "set echo top left; " +
             "set labelfront; " +
+            //"set antialiasDisplay true; " +
             "color echo [x000000]; echo select an item from the list on the right and click the load button...; " + 
             "refresh;" +
             "spacefill off;" +

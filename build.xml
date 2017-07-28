@@ -88,6 +88,7 @@
                 --js ${build.web.dir}/js/JSmol.min.nojq.js
                 --js ${build.web.dir}/js/utils.js
                 --js ${build.web.dir}/js/Comando.js
+                --js ${build.web.dir}/js/dadosProteinas.js
                 --js ${build.web.dir}/js/script.js
                 --js_output_file ${build.web.dir}/js/script.min.js"/>
         

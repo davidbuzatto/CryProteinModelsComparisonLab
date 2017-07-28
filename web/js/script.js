@@ -34,82 +34,6 @@ var dSurface2 = false;
 var dContact1 = false;
 var dContact2 = false;
 
-
-var dadosProteinas = {
-    Cry1Aa1: { 
-        dI: [ 48, 251 ],
-        dII: [ 259, 460 ],
-        dIII: [ 462, 605 ],
-        dIName: "Endotoxin_N",
-        dIIName: "Endotoxin_M",
-        dIIIName: "delta_endotoxin_C"
-    }, 
-    Cry1Ac1: { 
-        dI: [ 48, 251 ],
-        dII: [ 259, 461 ],
-        dIII: [ 463, 609 ],
-        dIName: "Endotoxin_N",
-        dIIName: "Endotoxin_M",
-        dIIIName: "delta_endotoxin_C"
-    },
-    Cry2Aa1: { 
-        dI: [ 80, 262 ],
-        dII: [ 267, 472 ],
-        dIII: [ 494, 628 ],
-        dIName: "Endotoxin_N",
-        dIIName: "Endotoxin_mid",
-        dIIIName: "Endotoxin_C"
-    },
-    Cry3Aa1: { 
-        dI: [ 91, 295 ],
-        dII: [ 303, 507 ],
-        dIII: [ 510, 652 ],
-        dIName: "Endotoxin_N",
-        dIIName: "Endotoxin_M",
-        dIIIName: "delta_endotoxin_C"
-    },
-    Cry3Bb1: { 
-        dI: [ 82, 288 ],
-        dII: [ 296, 502 ],
-        dIII: [ 505, 650 ],
-        dIName: "Endotoxin_N",
-        dIIName: "Endotoxin_M",
-        dIIIName: "delta_endotoxin_C"
-    },
-    Cry4Aa1: { 
-        dI: [ 110, 314 ],
-        dII: [ 322, 528 ],
-        dIII: [ 530, 678 ],
-        dIName: "Endotoxin_N",
-        dIIName: "Endotoxin_M",
-        dIIIName: "delta_endotoxin_C"
-    },
-    Cry4Ba1: { 
-        dI: [ 69, 268 ],
-        dII: [ 284, 470 ],
-        dIII: [ 480, 623 ],
-        dIName: "Endotoxin_N",
-        dIIName: "Endotoxin_M",
-        dIIIName: "Endotoxin_C"
-    },
-    Cry5B: { 
-        dI: [ 91, 327 ],
-        dII: null,
-        dIII: [ 562, 695 ],
-        dIName: "Endotoxin_N",
-        dIIName: "",
-        dIIIName: "Endotoxin_C"
-    },
-    Cry8Ea1: { 
-        dI: [ 86, 289 ],
-        dII: [ 297, 501 ],
-        dIII: [ 502, 652 ],
-        dIName: "Endotoxin_N",
-        dIIName: "Endotoxin_M",
-        dIIIName: "delta_endotoxin_C"
-    }
-};
-
 var jmol_isReady = function (applet) {
     Jmol._getElement( applet, "appletdiv" ).style.border = "1px solid black";
 };
@@ -393,6 +317,7 @@ function initComponents() {
 
             $( "#dialogSlices" ).dialog( "close" );
             $( "#dialogDadosSlice" ).dialog( "close" );
+            $( "#dialogDadosReceptor" ).dialog( "close" );
             
             var model = models[ $( "#selModels" ).val() ];
             var v = model.show.split( " " );
@@ -456,13 +381,19 @@ function initComponents() {
         autoOpen: false,
         resizable: false,
         minWidth: 630,
-        title: "Similarity Slices"
+        title: "Similarity Slices and Receptor Regions"
     });
     
     $( "#dialogDadosSlice" ).dialog({
         dialogClass: "no-close",
         autoOpen: false,
         minWidth: 260
+    });
+    
+    $( "#dialogDadosReceptor" ).dialog({
+        dialogClass: "no-close",
+        autoOpen: false,
+        minWidth: 360
     });
     
     $("[data-toggle='tooltip']").tooltip({container: "body"});
@@ -576,6 +507,46 @@ function enviarComandoSliceMouseout( rec ) {
     
 }
 
+function enviarComandoReceptorMouseover( rec ) {
+    
+    Jmol.script( jmolApplet, 
+            Comando.buildComandoChangeColorIntervalo(
+                    "1.1", {
+                        ini: rec.oriStart,
+                        fim: rec.oriEnd
+                    }, 
+                    "#eea236" ).gerarComando() );
+                    
+    Jmol.script( jmolApplet, 
+            Comando.buildComandoChangeColorIntervalo(
+                    "2.1", {
+                        ini: rec.desStart,
+                        fim: rec.desEnd
+                    }, 
+                    "#eea236" ).gerarComando() );
+    
+}
+
+function enviarComandoReceptorMouseout( rec ) {
+    
+    Jmol.script( jmolApplet, 
+            Comando.buildComandoChangeColorIntervalo(
+                    "1.1", {
+                        ini: rec.oriStart,
+                        fim: rec.oriEnd
+                    }, 
+                    corModelo1 ).gerarComando() );
+                    
+    Jmol.script( jmolApplet, 
+            Comando.buildComandoChangeColorIntervalo(
+                    "2.1", {
+                        ini: rec.desStart,
+                        fim: rec.desEnd
+                    }, 
+                    corModelo2 ).gerarComando() );
+    
+}
+
 function enviarComandoAAMouseover( evt ) {
     
     var $span = $( evt.target );
@@ -585,10 +556,19 @@ function enviarComandoAAMouseover( evt ) {
         case "H":
             cor = corStructH;
             break;
+        case "h":
+            cor = corStructH;
+            break;
         case "E":
             cor = corStructE;
             break;
+        case "e":
+            cor = corStructE;
+            break;
         case "L":
+            cor = corStructL;
+            break;
+        case "l":
             cor = corStructL;
             break;
     }
@@ -844,7 +824,7 @@ function montarDialogoSlices() {
         fillStyle: '#999',
         fontStyle: 'bold',
         x: margem,
-        y: 180,
+        y: 260,
         fontSize: 18,
         fontFamily: 'monospace',
         text: selectedModel.recortes[0].m2
@@ -856,7 +836,7 @@ function montarDialogoSlices() {
         strokeStyle: '#999',
         strokeWidth: 1,
         x: margem,
-        y: 200,
+        y: 280,
         width: ( largura - margem*2 ) * totalAA2 / maximo,
         height: 40
     });
@@ -869,7 +849,7 @@ function montarDialogoSlices() {
             strokeStyle: '#849CB2',
             strokeWidth: 1,
             x: margem + ( largura - margem*2 ) * dM2.dI[0] / maximo,
-            y: 200,
+            y: 280,
             width: ( largura - margem*2 ) * (dM2.dI[1] - dM2.dI[0]) / maximo,
             height: 40,
             cursors: {
@@ -892,7 +872,7 @@ function montarDialogoSlices() {
             fillStyle: '#849CB2',
             fontStyle: 'bold',
             x: margem + 5 + ( largura - margem*2 ) * dM2.dI[0] / maximo,
-            y: 203,
+            y: 283,
             fontSize: 18,
             fontFamily: 'monospace',
             text: "D-I"
@@ -903,7 +883,7 @@ function montarDialogoSlices() {
             fillStyle: '#849CB2',
             fontStyle: 'bold',
             x: margem + 5 + ( largura - margem*2 ) * dM2.dI[0] / maximo,
-            y: 228,
+            y: 308,
             fontSize: 10,
             fontFamily: 'monospace',
             text: dM2.dIName
@@ -919,7 +899,7 @@ function montarDialogoSlices() {
             strokeStyle: '#8CBA87',
             strokeWidth: 1,
             x: margem + ( largura - margem*2 ) * dM2.dII[0] / maximo,
-            y: 200,
+            y: 280,
             width: ( largura - margem*2 ) * (dM2.dII[1] - dM2.dII[0]) / maximo,
             height: 40,
             cursors: {
@@ -942,7 +922,7 @@ function montarDialogoSlices() {
             fillStyle: '#8CBA87',
             fontStyle: 'bold',
             x: margem + 5 + ( largura - margem*2 ) * dM2.dII[0] / maximo,
-            y: 203,
+            y: 283,
             fontSize: 18,
             fontFamily: 'monospace',
             text: "D-II"
@@ -953,7 +933,7 @@ function montarDialogoSlices() {
             fillStyle: '#8CBA87',
             fontStyle: 'bold',
             x: margem + 5 + ( largura - margem*2 ) * dM2.dII[0] / maximo,
-            y: 228,
+            y: 308,
             fontSize: 10,
             fontFamily: 'monospace',
             text: dM2.dIIName
@@ -968,7 +948,7 @@ function montarDialogoSlices() {
             strokeStyle: '#CEA386',
             strokeWidth: 1,
             x: margem + ( largura - margem*2 ) * dM2.dIII[0] / maximo,
-            y: 200,
+            y: 280,
             width: ( largura - margem*2 ) * (dM2.dIII[1] - dM2.dIII[0]) / maximo,
             height: 40,
             cursors: {
@@ -991,7 +971,7 @@ function montarDialogoSlices() {
             fillStyle: '#CEA386',
             fontStyle: 'bold',
             x: margem + 5 + ( largura - margem*2 ) * dM2.dIII[0] / maximo,
-            y: 203,
+            y: 283,
             fontSize: 18,
             fontFamily: 'monospace',
             text: "D-III"
@@ -1002,7 +982,7 @@ function montarDialogoSlices() {
             fillStyle: '#CEA386',
             fontStyle: 'bold',
             x: margem + 5 + ( largura - margem*2 ) * dM2.dIII[0] / maximo,
-            y: 228,
+            y: 308,
             fontSize: 10,
             fontFamily: 'monospace',
             text: dM2.dIIIName
@@ -1020,10 +1000,10 @@ function montarDialogoSlices() {
                 fillStyle: '#999',
                 fontStyle: 'bold',
                 x: margem + ( largura - margem*2 ) * rec.iniMod1c / maximo,
-                y: 100,
+                y: 140,
                 fontSize: 18,
                 fontFamily: 'monospace',
-                text: "Slices"
+                text: "Slice(s)"
             });
             primeiro = false;
         }
@@ -1036,7 +1016,7 @@ function montarDialogoSlices() {
             strokeWidth: 1,
             pos: pos,
             x: margem + ( largura - margem*2 ) * rec.iniMod1c / maximo,
-            y: 120,
+            y: 160,
             width: ( largura - margem*2 ) * (rec.fimMod1c - rec.iniMod1c) / maximo,
             height: 40,
             cursors: {
@@ -1072,6 +1052,146 @@ function montarDialogoSlices() {
         });
         
     });
+    
+    primeiro = true;
+    
+    var v = selectedModel.show.split( " " );
+    var m1 = v[0];
+    var m2 = v[3];
+    var receptoresM1 = dadosProteinas[m1].receptorData[m2];
+    var receptoresM2 = dadosProteinas[m2].receptorData[m1];
+    
+    if ( receptoresM1 !== null ) {
+        
+        $.each( receptoresM1, function( pos, rec ){
+
+            if ( primeiro ) {
+                $canvas.drawText({
+                    layer: true,
+                    fillStyle: '#999',
+                    fontStyle: 'bold',
+                    x: margem + ( largura - margem*2 ) * rec.oriStart / maximo,
+                    y: 100,
+                    fontSize: 14,
+                    fontFamily: 'monospace',
+                    text: m1 + " Receptor Region(s)"
+                });
+                primeiro = false;
+            }
+
+            $canvas.drawRect({
+                layer: true,
+                name: "layerReceptorsM1" + pos,
+                fillStyle: '#ddd',
+                strokeStyle: '#999',
+                strokeWidth: 1,
+                pos: pos,
+                x: margem + ( largura - margem*2 ) * rec.oriStart / maximo,
+                y: 120,
+                width: ( largura - margem*2 ) * (rec.oriEnd - rec.oriStart) / maximo,
+                height: 20,
+                cursors: {
+                    mouseover: "pointer"
+                },
+                mouseover: function( layer ) {
+                    layer.fillStyle = "#eea236";
+                    layer.strokeStyle = "#000";
+                    enviarComandoReceptorMouseover( receptoresM1[layer.pos] );
+                },
+                mouseout: function( layer ) {
+                    layer.fillStyle = "#ddd";
+                    layer.strokeStyle = "#999";
+                    enviarComandoReceptorMouseout( receptoresM1[layer.pos] );
+                },
+                click: function( layer ) {
+
+                    var rec = receptoresM1[layer.pos];
+
+                    recorteM1 = {
+                        ini: rec.oriStart,
+                        fim: rec.oriEnd
+                    };
+
+                    recorteM2 = {
+                        ini: rec.desStart,
+                        fim: rec.desEnd
+                    };
+
+                    abrirDadosReceptor( rec, layer.event );
+                    enviarComandoSlice();
+                }
+            });
+
+        });
+        
+    }
+    
+    primeiro = true;
+    
+    if ( receptoresM2 !== null ) {
+        
+        $.each( receptoresM2, function( pos, rec ){
+
+            if ( primeiro ) {
+                $canvas.drawText({
+                    layer: true,
+                    fillStyle: '#999',
+                    fontStyle: 'bold',
+                    x: margem + ( largura - margem*2 ) * rec.oriStart / maximo,
+                    y: 220,
+                    fontSize: 14,
+                    fontFamily: 'monospace',
+                    text: m2 + " Receptor Region(s)"
+                });
+                primeiro = false;
+            }
+
+            $canvas.drawRect({
+                layer: true,
+                name: "layerReceptorsM2" + pos,
+                fillStyle: '#ddd',
+                strokeStyle: '#999',
+                strokeWidth: 1,
+                pos: pos,
+                x: margem + ( largura - margem*2 ) * rec.oriStart / maximo,
+                y: 240,
+                width: ( largura - margem*2 ) * (rec.oriEnd - rec.oriStart) / maximo,
+                height: 20,
+                cursors: {
+                    mouseover: "pointer"
+                },
+                mouseover: function( layer ) {
+                    layer.fillStyle = "#eea236";
+                    layer.strokeStyle = "#000";
+                    enviarComandoReceptorMouseover( receptoresM2[layer.pos] );
+                },
+                mouseout: function( layer ) {
+                    layer.fillStyle = "#ddd";
+                    layer.strokeStyle = "#999";
+                    enviarComandoReceptorMouseout( receptoresM2[layer.pos] );
+                },
+                click: function( layer ) {
+
+                    var rec = receptoresM2[layer.pos];
+
+                    recorteM1 = {
+                        ini: rec.oriStart,
+                        fim: rec.oriEnd
+                    };
+
+                    recorteM2 = {
+                        ini: rec.desStart,
+                        fim: rec.desEnd
+                    };
+
+                    abrirDadosReceptor( rec, layer.event );
+                    enviarComandoSlice();
+                }
+            });
+
+        });
+        
+    }
     
     // botões
     $( "#btnsD" ).html( "" );
@@ -1125,6 +1245,120 @@ function montarDialogoSlices() {
         
     });
     
+    $( "#btnsRM1" ).html( m1 + ": " );
+    var vazio = true;
+    
+    $.each( receptoresM1, function( pos, rec ){
+        
+        vazio = false;
+        var $btn = null;
+        
+        $btn = $( htmlToUse.replace( "#", rec.name ) );
+        $btn.data( "pos", pos+1 );
+        
+        $btn.mouseover( function( evt ) {
+            var posRec = Number( $( evt.target ).data( "pos" ) );
+            $canvas.setLayer( "layerReceptorsM1" + (posRec-1), {
+                fillStyle: "#eea236",
+                strokeStyle: "#000"
+            }).drawLayers();
+            enviarComandoReceptorMouseover( receptoresM1[posRec-1] );
+        });
+        
+        $btn.mouseout( function( evt ) {
+            var posRec = Number( $( evt.target ).data( "pos" ) );
+            $canvas.setLayer( "layerReceptorsM1" + (posRec-1), {
+                fillStyle: "#ddd",
+                strokeStyle: "#999"
+            }).drawLayers();
+            enviarComandoReceptorMouseout( receptoresM1[posRec-1] );
+        });
+        
+        $btn.click( function( evt ) {
+            
+            var posRec = Number( $( evt.target ).data( "pos" ) );
+            var recorte = receptoresM1[posRec-1];
+                
+            recorteM1 = {
+                ini: recorte.oriStart,
+                fim: recorte.oriEnd
+            };
+
+            recorteM2 = {
+                ini: recorte.desStart,
+                fim: recorte.desEnd
+            };
+                
+            abrirDadosReceptor( recorte, evt );
+            enviarComandoSlice();
+            
+        });
+        
+        $( "#btnsRM1" ).append( $btn );
+        
+    });
+    
+    if ( vazio ) {
+        $( "#btnsRM1" ).append( "None" );
+    }
+    
+    $( "#btnsRM2" ).html( m2 + ": " );
+    vazio = true;
+    
+    $.each( receptoresM2, function( pos, rec ){
+        
+        vazio = false;
+        var $btn = null;
+        
+        $btn = $( htmlToUse.replace( "#", rec.name ) );
+        $btn.data( "pos", pos+1 );
+        
+        $btn.mouseover( function( evt ) {
+            var posRec = Number( $( evt.target ).data( "pos" ) );
+            $canvas.setLayer( "layerReceptorsM2" + (posRec-1), {
+                fillStyle: "#eea236",
+                strokeStyle: "#000"
+            }).drawLayers();
+            enviarComandoReceptorMouseover( receptoresM2[posRec-1] );
+        });
+        
+        $btn.mouseout( function( evt ) {
+            var posRec = Number( $( evt.target ).data( "pos" ) );
+            $canvas.setLayer( "layerReceptorsM2" + (posRec-1), {
+                fillStyle: "#ddd",
+                strokeStyle: "#999"
+            }).drawLayers();
+            enviarComandoReceptorMouseout( receptoresM2[posRec-1] );
+        });
+        
+        $btn.click( function( evt ) {
+            
+            var posRec = Number( $( evt.target ).data( "pos" ) );
+            var recorte = receptoresM2[posRec-1];
+                
+            recorteM1 = {
+                ini: recorte.oriStart,
+                fim: recorte.oriEnd
+            };
+
+            recorteM2 = {
+                ini: recorte.desStart,
+                fim: recorte.desEnd
+            };
+                
+            abrirDadosReceptor( recorte, evt );
+            enviarComandoSlice();
+            
+        });
+        
+        $( "#btnsRM2" ).append( $btn );
+        
+    });
+    
+    if ( vazio ) {
+        $( "#btnsRM2" ).append( "None" );
+    }
+    
 }
 
 function abrirDadosSlice( rec, evt ) {
@@ -1150,6 +1384,29 @@ function abrirDadosSlice( rec, evt ) {
     
 }
 
+function abrirDadosReceptor( rec, evt ) {
+    
+    var $divReceptorData = $( "#divReceptorData" );
+    var $dialogDadosReceptor = $( "#dialogDadosReceptor" );
+    
+    var dados = montarDadosReceptor( rec );
+    
+    $divReceptorData.html( "" );
+    $divReceptorData.html( dados.html );
+    
+    $dialogDadosReceptor.dialog( "option", "title", "Data of Receptor Region \"" + rec.name + "\"" );
+    $dialogDadosReceptor.dialog( "option", "width", dados.size * 10 + 40 );
+    
+    $dialogDadosReceptor.dialog( "option", "position", {
+        my: "left+3 bottom-3",
+        of: evt,
+        collision: "fit"
+    });
+    
+    $dialogDadosReceptor.dialog( "open" );
+    
+}
+
 function montarDadosSlice( rec ) {
     
     var dados = {};
@@ -1165,7 +1422,7 @@ function montarDadosSlice( rec ) {
         html += formatarTexto( rec.a1, false ) + "</br>";
         html += formatarTexto( rec.i, false ) + "</br>";
         html += formatarTexto( rec.a2, false ) + "</br>";
-        html += formatarTexto( rec.s2, true, rec.iniMod2c, rec.iniMod1c ) + "</br>";
+        html += formatarTexto( rec.s2, true, rec.iniMod1c, rec.iniMod2c ) + "</br>";
     } else {
         
         size = rec.struct1[0].length;
@@ -1182,7 +1439,7 @@ function montarDadosSlice( rec ) {
             html += formatarTexto( rec.aa1[i], false ) + "</br>";
             html += formatarTexto( rec.id[i], false ) + "</br>";
             html += formatarTexto( rec.aa2[i], false ) + "</br>";
-            html += formatarTexto( rec.struct2[i], true, rec.iniMod2c + ajuste, rec.iniMod1c + ajuste ) + "</br></br>";
+            html += formatarTexto( rec.struct2[i], true, rec.iniMod1c + ajuste, rec.iniMod2c + ajuste ) + "</br></br>";
             
         }
     }
@@ -1196,15 +1453,40 @@ function montarDadosSlice( rec ) {
     
 }
 
+function montarDadosReceptor( rec ) {
+    
+    var dados = {};
+    var html = "";
+    var size = 0;
+        
+    html += "&nbsp;&nbsp;&nbsp;&nbsp;" + rec.m1 + ": [" + rec.oriStart + ";" + rec.oriEnd + "]</br>";
+    html += "&nbsp;&nbsp;&nbsp;&nbsp;" + rec.m2 + ": [" + rec.desStart + ";" + rec.desEnd + "]</br></br>";
+    
+    size = rec.s1.length;
+    html += formatarTexto( rec.s1, true, rec.oriStart, rec.desStart ) + "</br>";
+    html += formatarTexto( rec.a1, false ) + "</br>";
+    html += formatarTexto( rec.i, false ) + "</br>";
+    html += formatarTexto( rec.a2, false ) + "</br>";
+    html += formatarTexto( rec.s2, true, rec.oriStart, rec.desStart ) + "</br>";
+    
+    dados = {
+        html: html,
+        size: size
+    };
+    
+    return dados;
+    
+}
+
 function formatarTexto( texto, trocar, ini1, ini2 ) {
     
-    var novo = texto.replace( /\s/g, "&nbsp;" );
+    var novo = texto.replace( /\s/g, "%" );
+    var novoComEvento = "";
     
     if ( trocar ) {
         
         var cont1 = ini1;
         var cont2 = ini2;
-        var novoComEvento = "";
         
         for ( var i = 0; i < novo.length; i++ ) {
             
@@ -1224,6 +1506,18 @@ function formatarTexto( texto, trocar, ini1, ini2 ) {
                     cl = "structL";
                     simbolo = "L";
                     break;
+                case "$":
+                    cl = "structHz";
+                    simbolo = "h";
+                    break;
+                case "&":
+                    cl = "structEz";
+                    simbolo = "e";
+                    break;
+                case "*":
+                    cl = "structLz";
+                    simbolo = "l";
+                    break;
             }
             
             if ( cl ) {
@@ -1233,16 +1527,17 @@ function formatarTexto( texto, trocar, ini1, ini2 ) {
                         "onmouseover='enviarComandoAAMouseover(event)' " + 
                         "onmouseout='enviarComandoAAMouseout(event)' " + 
                         ">" + simbolo + "</span>";
+            } else {
+                novoComEvento += novo[i];
             }
             
         }
         
-        novo = texto.substring( 0, 4 ).replace( /\s/g, "&nbsp;" ) + 
-                novoComEvento +
-                texto.substring( texto.length - 4 ).replace( "/@/g", "" ).replace( "/[?]/g", "" ).replace( "/[+]/g", "" ).replace( /\s/g, "&nbsp;" ) ;
+        return novoComEvento.replace( /[%]/g, "&nbsp;" );
+        
+    } else {
+        return texto.replace( /\s/g, "&nbsp;" );
     }
-    
-    return novo;
     
 }
 

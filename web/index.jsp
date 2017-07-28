@@ -62,6 +62,7 @@
                 
                 <script type="text/javascript" src="js/utils.js"></script>
                 <script type="text/javascript" src="js/Comando.js"></script>
+                <script type="text/javascript" src="js/dadosProteinas.js"></script>
                 <script type="text/javascript" src="js/script.js"></script>
                 
             </c:when>
@@ -92,7 +93,7 @@
                                     criarApplet();
                                 </script>
                                 <div class="row" style="padding-top: 10px;">
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">Command</span>
                                             <input id="txtCommand" type="text" class="form-control" placeholder="type 'help' to open Jmol script documentation"/>
@@ -104,8 +105,8 @@
                                     <div class="col-md-2">
                                         <button id="btnOpenConsole" type="button" class="btn btn-primary">Open Console</button>
                                     </div>
-                                    <div class="col-md-2">
-                                        <button id="btnSlices" type="button" class="btn btn-warning">Slices</button>
+                                    <div class="col-md-4" style="text-align: right;">
+                                        <button id="btnSlices" type="button" class="btn btn-warning">Slices and Receptors</button>
                                     </div>
                                 </div>
                             </div>
@@ -215,16 +216,23 @@
         </div>
         
         <div id="dialogSlices">
-            <p>Click in one of the slices available for the current loaded model!</p>
-            <canvas id="canvasSlices" width="600" height="260"></canvas>
-            <h4>Available Slices:</h4>
-            <div id="btnsD" class="row" style="margin: 5px; line-height: 40pt;">
-            </div>
+            <canvas id="canvasSlices" width="600" height="340"></canvas>
+            <h4>Available Slice(s):</h4>
+            <div id="btnsD" class="row" style="margin: 5px; line-height: 40pt;"></div>
+            <h4>Available Receptor Region(s):</h4>
+            <div id="btnsRM1" class="row" style="margin: 5px; line-height: 40pt;"></div>
+            <div id="btnsRM2" class="row" style="margin: 5px; line-height: 40pt;"></div>
         </div>
         
         <div id="dialogDadosSlice">
             <div id="divSliceData">
                 Slice data
+            </div>
+        </div>
+        
+        <div id="dialogDadosReceptor">
+            <div id="divReceptorData">
+                Receptor region data
             </div>
         </div>
         
@@ -245,7 +253,7 @@
                             <a href="http://lattes.cnpq.br/3195515678174130" target="_blank">Prof. Sônia Marli Zingaretti academic curriculum.</a>
                         </p>
                         <p>
-                            The models presented here were obtained in <a href="http://www.rcsb.org/" target="_blank">RCSB Protein Data Bank</a> and were processed by the <a href="http://ekhidna.biocenter.helsinki.fi/dali_lite/start" target="_blank">Dali pairwise comparison service</a>.
+                            The models presented here were obtained in <a href="http://www.rcsb.org/" target="_blank">RCSB Protein Data Bank</a> and were processed by the <a href="http://ekhidna2.biocenter.helsinki.fi/dali/" target="_blank">Dali pairwise comparison service</a>.
                         </p>
                         <p>
                             This project uses the following JavaScript libraries:
