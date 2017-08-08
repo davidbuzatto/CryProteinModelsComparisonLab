@@ -28,7 +28,7 @@ Ph.D. project.
 
 ## Installation
 
-It's a NetBeans that needs to be build and deployed in a Servlet Container like Apache Tomcat.
+It's a NetBeans project that needs to be build and deployed in a Servlet Container like Apache Tomcat.
 
 ## Contributors
 
