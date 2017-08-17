@@ -396,6 +396,13 @@ function initComponents() {
         minWidth: 360
     });
     
+    $( "#dialogRendered" ).dialog({
+        dialogClass: "no-close",
+        autoOpen: false,
+        minWidth: 360,
+        minHeight: 430
+    });
+    
     $("[data-toggle='tooltip']").tooltip({container: "body"});
     $.jCanvas.defaults.fromCenter = false;
     
@@ -1388,14 +1395,31 @@ function abrirDadosReceptor( rec, evt ) {
     
     var $divReceptorData = $( "#divReceptorData" );
     var $dialogDadosReceptor = $( "#dialogDadosReceptor" );
+    var $dialogRendered = $( "#dialogRendered" );
     
     var dados = montarDadosReceptor( rec );
+    
+    var image = "img/rendered/" + rec.m1 + 
+            rec.name
+            .split( " " ).join( "" )
+            .split( "," ).join( "" )
+            .split( "and" ).join( "" ) + "_" + rec.m2 + ".png";
     
     $divReceptorData.html( "" );
     $divReceptorData.html( dados.html );
     
     $dialogDadosReceptor.dialog( "option", "title", "Data of Receptor Region \"" + rec.name + "\"" );
     $dialogDadosReceptor.dialog( "option", "width", dados.size * 10 + 40 );
+    $dialogRendered.dialog( "option", "title", "High Resolution Representation for \"" + rec.name + "\" of " + rec.m1 + " x " + rec.m2 );
+    
+    $( "#btnAbrirRendered" ).click( function(){
+        $( "#imgRendered" ).attr( "src", image );
+        $( "#imgRendered" ).load( function(){
+            $dialogRendered.dialog( "option", "width", $( this ).width() + 70 );
+            $dialogRendered.dialog( "option", "height", $( this ).height() + 70 );
+            $dialogRendered.dialog( "open" );
+        });
+    });
     
     $dialogDadosReceptor.dialog( "option", "position", {
         my: "left+3 bottom-3",

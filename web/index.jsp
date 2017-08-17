@@ -234,6 +234,14 @@
             <div id="divReceptorData">
                 Receptor region data
             </div>
+            <div style="text-align: right">
+                <br/>
+                <button id="btnAbrirRendered" type="button" class='btn btn-warning'>High Resolution Representation</button>
+            </div>
+        </div>
+        
+        <div id="dialogRendered">
+            <img style="border: solid thin #000;" id="imgRendered" src=""/>
         </div>
         
         <div id="modalSobre" class="modal fade">
