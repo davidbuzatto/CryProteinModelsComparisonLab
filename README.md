@@ -1,11 +1,11 @@
 ## Synopsis
 
-The objective of this site is to show the results of a Ph. D. project developed by David Buzatto under the advisement of Prof. Sônia Marli Zinagaretti at UNAERP, Universidade de Ribeirão Preto.
+The objective of this site is to show the results of a Ph. D. project developed by David Buzatto under the advisement of Prof. Sonia Marli Zinagaretti at UNAERP, Universidade de Ribeirão Preto.
 We want to thank IFSP - Instituto Federal de Educação, Ciência e Tecnologia de São Paulo and UNAERP for partial financial support.
 
 [David Buzatto academic curriculum.](http://lattes.cnpq.br/7916716785143122)
 
-[Prof. Sônia Marli Zingaretti academic curriculum.](http://lattes.cnpq.br/3195515678174130)
+[Prof. Sonia Marli Zingaretti academic curriculum.](http://lattes.cnpq.br/3195515678174130)
 
 The models presented here were obtained in [RCSB Protein Data Bank](http://www.rcsb.org/) and were processed by the [Dali pairwise comparison service](http://ekhidna.biocenter.helsinki.fi/dali_lite/start).
 
@@ -31,6 +31,12 @@ Ph.D. project.
 It's a NetBeans project that needs to be build and deployed in a Servlet Container like Apache Tomcat.
 
 ## Contributors
+
+Main developer: David Buzatto
+
+## Experimental Data Availability
+
+All experimental data are available at [https://github.com/davidbuzatto/CryProteinModelsComparisonData](https://github.com/davidbuzatto/CryProteinModelsComparisonData)
 
 Main developer: David Buzatto
 
