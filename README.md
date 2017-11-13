@@ -38,7 +38,13 @@ Main developer: David Buzatto
 
 All experimental data are available at [https://github.com/davidbuzatto/CryProteinModelsComparisonData](https://github.com/davidbuzatto/CryProteinModelsComparisonData)
 
+## Contributors
+
 Main developer: David Buzatto
+
+Experiment idealization: David Buzatto and Prof. Sonia Marli Zingaretti
+
+Advisement: Prof. Sonia Marli Zinagaretti
 
 ## License
 
