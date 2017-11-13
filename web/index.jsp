@@ -277,6 +277,9 @@
                             <li><a href="http://projects.calebevans.me/jcanvas/" target="_blank">jCanvas - Drawing</a></li>
                         </ul>
                         <p>
+                            All experimental data are available at <a href="https://github.com/davidbuzatto/CryProteinModelsComparisonData" target="_blank">https://github.com/davidbuzatto/CryProteinModelsComparisonData</a>
+                        </p>
+                        <p>
                             Developed by David Buzatto - davidbuzatto[at]ifsp.edu.br - <a href="http://davidbuzatto.com.br" target="_blank">http://davidbuzatto.com.br</a>
                         </p>
                     </div>
