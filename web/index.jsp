@@ -254,11 +254,11 @@
                     <div class="modal-body">
                         <p>
                             The objective of this site is to show the results of a Ph. D. project developed by
-                            David Buzatto under the advisement of Prof. Sônia Marli Zinagaretti at UNAERP, Universidade de Ribeirão Preto.
+                            David Buzatto under the advisement of Prof. Sonia Marli Zinagaretti at UNAERP, Universidade de Ribeirão Preto.
                         </p>
                         <p>
                             <a href="http://lattes.cnpq.br/7916716785143122" target="_blank">David Buzatto academic curriculum.</a></br>
-                            <a href="http://lattes.cnpq.br/3195515678174130" target="_blank">Prof. Sônia Marli Zingaretti academic curriculum.</a>
+                            <a href="http://lattes.cnpq.br/3195515678174130" target="_blank">Prof. Sonia Marli Zingaretti academic curriculum.</a>
                         </p>
                         <p>
                             The models presented here were obtained in <a href="http://www.rcsb.org/" target="_blank">RCSB Protein Data Bank</a> and were processed by the <a href="http://ekhidna2.biocenter.helsinki.fi/dali/" target="_blank">Dali pairwise comparison service</a>.
